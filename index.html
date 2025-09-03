@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHBS Kita - Jendela Sehat Keluarga Indonesia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="10" r="1.2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 25s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-40px) translateX(-5px); }
+            75% { transform: translateY(-20px) translateX(-15px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideInDown 1s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            animation: slideInUp 1s ease-out 0.3s both;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            animation: slideInUp 1s ease-out 0.6s both;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes slideInDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.9s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(135deg, #ff6b35, #ff8a50);
+            color: white;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .cta-button.primary:hover {
+            background: linear-gradient(135deg, #e55a2b, #ff7043);
+        }
+
+        .cta-button.secondary:hover {
+            background: white;
+            color: #2e7d32;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 4rem 0;
+            margin-top: -2rem;
+            border-radius: 30px 30px 0 0;
+            position: relative;
+            z-index: 3;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            opacity: 0;
+        }
+        .stat-item.visible {
+            animation: countUp 2s ease-out forwards;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Content Sections */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        .section {
+            margin-bottom: 5rem;
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #2e7d32;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+            border-radius: 2px;
+        }
+
+        /* Cards System */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+        }
+        
+        .card.visible {
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #2e7d32;
+            text-align: center;
+        }
+
+        .card p {
+            color: #666;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .card-button {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .card-button:hover {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            transform: scale(1.05);
+        }
+
+        /* Interactive Tools Section */
+        .tools-section {
+            background: white;
+            border-radius: 25px;
+            padding: 4rem;
+            margin: 4rem 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .tools-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #4caf50, #2e7d32, #4caf50);
+            border-radius: 25px 25px 0 0;
+        }
+
+        .tool-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tool-tab {
+            background: #f5f5f5;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .tool-tab.active {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .tool-tab:hover:not(.active) {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .tool-container {
+            display: none;
+            background: #fafafa;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .tool-container.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-container h3 {
+            font-size: 2rem;
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .tool-container > p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: white;
+        }
+
+        .checkbox-item:hover {
+            border-color: #a5d6a7;
+            background: #f8fdf8;
+            transform: translateY(-2px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            cursor: pointer;
+            accent-color: #4caf50;
+            flex-shrink: 0;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .checkbox-item.checked {
+            border-color: #4caf50;
+            background: #f1f8e9;
+        }
+
+        /* Progress & Results */
+        .progress-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid #f0f0f0;
+        }
+
+        .progress-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .progress-header h4 {
+            color: #2e7d32;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 25px;
+            height: 25px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #66bb6a, #4caf50);
+            border-radius: 25px;
+            transition: width 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-top: 1rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .result-score {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .result-description {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .result-recommendations {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .result-recommendations h4 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .recommendation-list {
+            list-style: none;
+        }
+
+        .recommendation-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .recommendation-list li:last-child {
+            border-bottom: none;
+        }
+
+        .recommendation-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Challenge System */
+        .challenge-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .challenge-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-option:hover,
+        .challenge-option.selected {
+            border-color: #4caf50;
+            background: #f8fdf8;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .challenge-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .challenge-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-description {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1rem;
+            margin: 2rem auto;
+            max-width: 500px;
+        }
+
+        .challenge-day {
+            aspect-ratio: 1;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .challenge-day.completed {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border-color: #4caf50;
+            transform: scale(1.1);
+        }
+
+        .challenge-day.current {
+            border-color: #ff6b35;
+            background: linear-gradient(135deg, #ff6b35, #ff8a50);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .challenge-day:hover:not(.completed) {
+            transform: scale(1.05);
+            border-color: #a5d6a7;
+            background: #f8fdf8;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        #markCompleteBtn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Knowledge Detail Modal */
+        .knowledge-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            display: none; /* Changed */
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .knowledge-modal.active {
+            display: flex; /* Changed */
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .knowledge-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: #e55a2b;
+            transform: rotate(90deg);
+        }
+        
+        .modal-content h2 {
+            font-size: 2.2rem;
+            color: #2e7d32;
+            margin-bottom: 1.5rem;
+        }
+        .modal-content h3 {
+            font-size: 1.5rem;
+            color: #4caf50;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #ff6b35;
+            padding-left: 1rem;
+        }
+        .modal-content p, .modal-content ul, .modal-content ol {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        .modal-content ul, .modal-content ol {
+            padding-left: 1.5rem;
+        }
+        .modal-content .modal-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            margin: 1.5rem auto;
+            display: block;
+        }
+
+
+        /* Community Features */
+        .community-section {
+            background: linear-gradient(135deg, #f8fdf8, #e8f5e8);
+            border-radius: 25px;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .forum-preview {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .forum-post {
+            border-bottom: 1px solid #eee;
+            padding: 1.5rem 0;
+        }
+
+        .forum-post:last-child {
+            border-bottom: none;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .post-meta {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .post-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .post-content {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .post-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .post-action {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .post-action:hover {
+            background: #f0f8f0;
+            color: #4caf50;
+        }
+
+        /* Kids Zone Styles */
+        .kids-zone {
+            background: linear-gradient(135deg, #fff9c4, #f8bbd0, #e1bee7, #c8e6c9);
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kids-zone::before {
+            content: '🌈 ⭐ 🎈 🦋 🌟 ✨';
+            position: absolute;
+            top: 2rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .kids-mascot {
+            text-align: center;
+            font-size: 8rem;
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        .kids-game {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 3px solid #ff6b35;
+            transition: all 0.3s ease;
+        }
+
+        .kids-game:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .game-title {
+            color: #ff6b35;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: #81c784;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p {
+            opacity: 0.9;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .footer-section ul li a:hover {
+            color: #81c784;
+            opacity: 1;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #4caf50;
+            padding-top: 2rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #4caf50;
+            transform: translateY(-3px);
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.4s ease;
+            z-index: 1500;
+            border-left: 5px solid #2e7d32;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #f44336, #e57373);
+            border-left-color: #d32f2f;
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-left-color: #2e7d32;
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #388e3c, #2e7d32);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+                border-radius: 0 0 20px 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero {
+                padding: 4rem 0 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section {
+                padding: 2rem 0;
+                margin-bottom: 3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .tools-section {
+                padding: 2rem;
+            }
+
+            .tool-tabs {
+                flex-direction: column;
+            }
+
+            .tool-container {
+                padding: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .challenge-grid {
+                grid-template-columns: repeat(7, minmax(35px, 1fr));
+                gap: 0.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .notification {
+                top: 80px;
+                right: 10px;
+                left: 10px;
+                transform: translateY(-200px);
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .tools-section {
+                padding: 1.5rem;
+            }
+
+            .tool-container {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .challenge-grid {
+                grid-template-columns: repeat(7, minmax(30px, 1fr));
+            }
+
+            .kids-mascot {
+                font-size: 5rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Memuat konten...</p>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <span class="notification-icon" id="notificationIcon">ℹ️</span>
+            <span id="notificationText"></span>
+            <button class="notification-close" id="notificationClose">×</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav-container">
+                <div class="logo" onclick="scrollToSection('home')">
+                    🏥 PHBS Kita
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" onclick="scrollToSection('home', event)">Beranda</a></li>
+                    <li><a href="#knowledge" onclick="scrollToSection('knowledge', event)">Pengetahuan</a></li>
+                    <li><a href="#tools" onclick="scrollToSection('tools', event)">Alat Interaktif</a></li>
+                    <li><a href="#community" onclick="scrollToSection('community', event)">Komunitas</a></li>
+                    <li><a href="#kids" onclick="scrollToSection('kids', event)">Zona Anak</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>PHBS Kita</h1>
+                <p class="subtitle">Jendela Sehat Keluarga Indonesia</p>
+                <p class="description">Platform digital terdepan untuk mempromosikan Perilaku Hidup Bersih dan Sehat. Mari bersama membangun Indonesia yang lebih sehat, satu keluarga pada satu waktu.</p>
+                <div class="cta-buttons">
+                    <a href="#tools" class="cta-button primary" onclick="scrollToSection('tools', event)">Mulai Hidup Sehat</a>
+                    <a href="#knowledge" class="cta-button secondary" onclick="scrollToSection('knowledge', event)">Pelajari PHBS</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number" data-count="10">0</span>
+                    <span class="stat-label">Indikator PHBS</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="1250">0</span>
+                    <span class="stat-label">Keluarga Terbantu</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="50">0</span>
+                    <span class="stat-label">Artikel Kesehatan</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="6">0</span>
+                    <span class="stat-label">Tantangan Sehat</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- Knowledge Section -->
+            <section class="section" id="knowledge">
+                <h2 class="section-title">📚 Pojok Pengetahuan</h2>
+                <p class="section-subtitle">Pelajari semua hal tentang Perilaku Hidup Bersih dan Sehat dengan panduan lengkap dan mudah dipahami</p>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🏠</div>
+                        <h3>10 Indikator PHBS</h3>
+                        <p>Pelajari 10 indikator utama Perilaku Hidup Bersih dan Sehat untuk diterapkan di rumah tangga, sekolah, dan tempat kerja.</p>
+                        <button class="card-button" onclick="showKnowledgeDetail('phbs10')">Pelajari Sekarang</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🍎</div>
+                        <h3>Gizi Seimbang</h3>
+                        <p>Panduan lengkap tentang pola makan sehat dan gizi seimbang untuk seluruh anggota keluarga, dilengkapi tips menu harian.</p>
+                        <button class="card-button" onclick="showKnowledgeDetail('nutrition')">Pelajari Sekarang</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🧼</div>
+                        <h3>Cuci Tangan</h3>
+                        <p>Teknik mencuci tangan yang benar dengan sabun untuk mencegah penyakit menular, lengkap dengan 7 langkah tepat.</p>
+                        <button class="card-button" onclick="showKnowledgeDetail('handwash')">Pelajari Sekarang</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🚭</div>
+                        <h3>Bahaya Merokok</h3>
+                        <p>Informasi dampak buruk rokok bagi kesehatan dan lingkungan, serta strategi efektif untuk berhenti merokok.</p>
+                        <button class="card-button" onclick="showKnowledgeDetail('smoking')">Pelajari Sekarang</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🦟</div>
+                        <h3>Bebas Jentik</h3>
+                        <p>Cara efektif memberantas jentik nyamuk di rumah dengan metode 3M Plus untuk mencegah demam berdarah.</p>
+                        <button class="card-button" onclick="showKnowledgeDetail('mosquito')">Pelajari Sekarang</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💉</div>
+                        <h3>Imunisasi Lengkap</h3>
+                        <p>Pentingnya imunisasi rutin dan jadwal lengkap untuk bayi dan anak sesuai rekomendasi Kementerian Kesehatan.</p>
+                        <button class="card-button" onclick="showKnowledgeDetail('immunization')">Pelajari Sekarang</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Tools Section -->
+            <section class="section" id="tools">
+                <h2 class="section-title">🛠️ Alat Interaktif "Sehat Terencana"</h2>
+                <p class="section-subtitle">Gunakan berbagai alat interaktif untuk memantau dan meningkatkan penerapan PHBS dalam kehidupan sehari-hari</p>
+                <div class="tools-section">
+                    <div class="tool-tabs">
+                        <button class="tool-tab active" data-tool="homecheck">🏠 Ceklis Rumah Sehat</button>
+                        <button class="tool-tab" data-tool="challenge">🎯 Tantangan 21 Hari</button>
+                        <button class="tool-tab" data-tool="nutrition-calc">🍎 Kalkulator Gizi</button>
+                        <button class="tool-tab" data-tool="immunization">💉 Jadwal Imunisasi</button>
+                        <button class="tool-tab" data-tool="bmi-calc">⚖️ Kalkulator BMI</button>
+                    </div>
+
+                    <!-- Home Health Check Tool -->
+                    <div class="tool-container active" id="homecheck">
+                        <h3>🏠 Evaluasi Kondisi Rumah Sehat</h3>
+                        <p>Cek kondisi rumah Anda berdasarkan 8 kriteria PHBS dan dapatkan skor serta rekomendasi perbaikan yang personal.</p>
+                        <form id="homeCheckForm">
+                            <div class="checkbox-grid">
+                                <div class="checkbox-item"><input type="checkbox" id="water" name="criteria" value="10"><label for="water">💧 Memiliki akses air bersih</label></div>
+                                <div class="checkbox-item"><input type="checkbox" id="toilet" name="criteria" value="15"><label for="toilet">🚽 Memiliki jamban sehat</label></div>
+                                <div class="checkbox-item"><input type="checkbox" id="garbage" name="criteria" value="10"><label for="garbage">🗑️ Mengelola sampah dengan baik</label></div>
+                                <div class="checkbox-item"><input type="checkbox" id="ventilation" name="criteria" value="10"><label for="ventilation">🌬️ Ventilasi rumah cukup</label></div>
+                                <div class="checkbox-item"><input type="checkbox" id="mosquitoCheck" name="criteria" value="15"><label for="mosquitoCheck">🦟 Bebas jentik nyamuk (3M Plus)</label></div>
+                                <div class="checkbox-item"><input type="checkbox" id="smokingCheck" name="criteria" value="15"><label for="smokingCheck">🚭 Rumah bebas asap rokok</label></div>
+                                <div class="checkbox-item"><input type="checkbox" id="handwashCheck" name="criteria" value="10"><label for="handwashCheck">🧼 Tersedia fasilitas cuci tangan</label></div>
+                                <div class="checkbox-item"><input type="checkbox" id="food" name="criteria" value="15"><label for="food">🍎 Mengonsumsi makanan bergizi seimbang</label></div>
+                            </div>
+                            <div class="text-center" style="margin-top: 2rem;">
+                                <button type="button" onclick="evaluateHome()" class="cta-button primary">Evaluasi Rumah Saya</button>
+                            </div>
+                        </form>
+                        <div id="homeResult" class="hidden"></div>
+                    </div>
+
+                    <!-- 21 Days Challenge Tool -->
+                    <div class="tool-container" id="challenge">
+                        <h3>🎯 Tantangan 21 Hari Sehat</h3>
+                        <p>Pilih tantangan sehat dan bangun kebiasaan positif dalam 21 hari! Butuh konsistensi untuk membentuk kebiasaan baru.</p>
+                        <div id="challengeSelector">
+                            <div class="challenge-selector">
+                                <div class="challenge-option" data-challenge="water"><div class="challenge-icon">💧</div><div class="challenge-title">Air Putih 8 Gelas</div><div class="challenge-description">Minum minimal 8 gelas air putih setiap hari</div></div>
+                                <div class="challenge-option" data-challenge="fruit"><div class="challenge-icon">🍎</div><div class="challenge-title">Buah & Sayur</div><div class="challenge-description">Konsumsi buah dan sayur setiap hari</div></div>
+                                <div class="challenge-option" data-challenge="exercise"><div class="challenge-icon">🏃‍♂️</div><div class="challenge-title">Olahraga 30 Menit</div><div class="challenge-description">Berolahraga minimal 30 menit setiap hari</div></div>
+                                <div class="challenge-option" data-challenge="handwashChallenge"><div class="challenge-icon">🧼</div><div class="challenge-title">Cuci Tangan</div><div class="challenge-description">Cuci tangan sebelum makan & sesudah dari toilet</div></div>
+                                <div class="challenge-option" data-challenge="sleep"><div class="challenge-icon">😴</div><div class="challenge-title">Tidur 8 Jam</div><div class="challenge-description">Tidur cukup 7-8 jam setiap malam</div></div>
+                                <div class="challenge-option" data-challenge="meditation"><div class="challenge-icon">🧘‍♀️</div><div class="challenge-title">Meditasi</div><div class="challenge-description">Relaksasi 10 menit setiap hari</div></div>
+                            </div>
+                        </div>
+                        <div id="challengeTracker" class="hidden">
+                            <div class="progress-container">
+                                <div class="progress-header"><h4 id="challengeTitle"></h4><p id="challengeDesc"></p></div>
+                                <div class="progress-bar"><div class="progress-fill" id="challengeProgress" style="width: 0%;"></div></div>
+                                <div class="progress-text">Hari ke-<span id="currentDay">1</span> dari 21 (<span id="progressPercentage">0</span>% selesai)</div>
+                            </div>
+                            <div class="challenge-grid" id="challengeGrid"></div>
+                            <div class="text-center" style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                                <button id="markCompleteBtn" class="cta-button primary">✅ Tandai Hari Ini Selesai</button>
+                                <button onclick="resetChallenge()" class="cta-button secondary">🔄 Ganti Tantangan</button>
+                            </div>
+                            <div id="challengeSuccess" class="hidden result-card"><div class="result-score">🎉</div><div class="result-description">Selamat! Anda berhasil menyelesaikan tantangan 21 hari!</div><div class="text-center"><button onclick="downloadCertificate()" class="cta-button primary">📜 Unduh Sertifikat</button></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Calculator Tool -->
+                    <div class="tool-container" id="nutrition-calc">
+                        <h3>🍎 Kalkulator Kebutuhan Gizi Anak</h3>
+                        <p>Hitung estimasi kebutuhan gizi harian anak berdasarkan usia, berat, dan tinggi badan sesuai standar Kemenkes.</p>
+                        <form id="nutritionForm" class="form-grid">
+                            <div class="form-group"><label for="childName">Nama Anak:</label><input type="text" id="childName" placeholder="Contoh: Budi"></div>
+                            <div class="form-group"><label for="childAge">Usia Anak (tahun):</label><input type="number" id="childAge" min="1" max="12" placeholder="1-12"></div>
+                            <div class="form-group"><label for="childWeight">Berat Badan (kg):</label><input type="number" id="childWeight" step="0.1" placeholder="Contoh: 15.5"></div>
+                            <div class="form-group"><label for="childHeight">Tinggi Badan (cm):</label><input type="number" id="childHeight" step="0.1" placeholder="Contoh: 110"></div>
+                            <div class="form-group"><label for="childGender">Jenis Kelamin:</label><select id="childGender"><option value="">-- Pilih --</option><option value="male">Laki-laki</option><option value="female">Perempuan</option></select></div>
+                            <div class="form-group"><label for="activityLevel">Tingkat Aktivitas:</label><select id="activityLevel"><option value="">-- Pilih --</option><option value="low">Rendah (banyak duduk)</option><option value="moderate">Sedang (aktif bermain)</option><option value="high">Tinggi (sangat aktif/atlet)</option></select></div>
+                        </form>
+                        <div class="text-center" style="margin-top: 2rem;"><button type="button" onclick="calculateNutrition()" class="cta-button primary">Hitung Kebutuhan Gizi</button></div>
+                        <div id="nutritionResult" class="hidden"></div>
+                    </div>
+
+                    <!-- Immunization Schedule Tool -->
+                    <div class="tool-container" id="immunization">
+                        <h3>💉 Jadwal Imunisasi Anak</h3>
+                        <p>Masukkan tanggal lahir anak Anda untuk melihat jadwal imunisasi dasar lengkap sesuai rekomendasi IDAI 2023.</p>
+                        <form id="immunizationForm" class="form-grid" style="grid-template-columns: 1fr 1fr;">
+                            <div class="form-group"><label for="babyName">Nama Anak:</label><input type="text" id="babyName" placeholder="Contoh: Ani" required></div>
+                            <div class="form-group"><label for="birthDate">Tanggal Lahir:</label><input type="date" id="birthDate" required></div>
+                        </form>
+                        <div class="text-center" style="margin-top: 2rem;"><button type="button" onclick="generateImmunizationSchedule()" class="cta-button primary">Buat Jadwal</button></div>
+                        <div id="immunizationResult" class="hidden"></div>
+                    </div>
+                    
+                    <!-- BMI Calculator Tool -->
+                    <div class="tool-container" id="bmi-calc">
+                        <h3>⚖️ Kalkulator BMI (Indeks Massa Tubuh)</h3>
+                        <p>Ketahui status gizi Anda dengan menghitung Indeks Massa Tubuh. Berlaku untuk usia 18 tahun ke atas.</p>
+                        <form id="bmiForm" class="form-grid" style="grid-template-columns: 1fr 1fr;">
+                            <div class="form-group"><label for="bmiWeight">Berat Badan (kg):</label><input type="number" id="bmiWeight" step="0.1" placeholder="Contoh: 65.5" required></div>
+                            <div class="form-group"><label for="bmiHeight">Tinggi Badan (cm):</label><input type="number" id="bmiHeight" placeholder="Contoh: 170" required></div>
+                        </form>
+                        <div class="text-center" style="margin-top: 2rem;"><button type="button" onclick="calculateBMI()" class="cta-button primary">Hitung BMI Saya</button></div>
+                        <div id="bmiResult" class="hidden"></div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Community Section -->
+            <section class="section" id="community">
+                <h2 class="section-title">💬 Ruang Komunitas "Tanya Sehat"</h2>
+                <p class="section-subtitle">Bergabunglah dengan komunitas kami untuk berbagi pengalaman, bertanya, dan mendapatkan dukungan dari sesama pejuang hidup sehat.</p>
+                <div class="community-section">
+                     <div class="forum-preview">
+                         <h3 class="text-center" style="color: #2e7d32; font-size: 1.8rem; margin-bottom: 2rem;">Diskusi Terhangat</h3>
+                         <div class="forum-post">
+                             <div class="post-header">
+                                 <div class="user-avatar">I</div>
+                                 <div class="post-meta"><span class="post-author">Ibu Wati</span><div class="post-time">2 jam lalu</div></div>
+                             </div>
+                             <div class="post-content"><h4>Bagaimana cara mengatasi anak yang susah makan sayur?</h4><p>Anak saya usia 4 tahun, setiap kali diberi sayur pasti dilepeh. Sudah dicoba berbagai cara tapi belum berhasil. Mohon sarannya bunda...</p></div>
+                             <div class="post-actions"><button class="post-action">👍 12 Suka</button><button class="post-action">💬 5 Balasan</button></div>
+                         </div>
+                         <div class="forum-post">
+                             <div class="post-header">
+                                 <div class="user-avatar">A</div>
+                                 <div class="post-meta"><span class="post-author">Ayah Doni</span><div class="post-time">5 jam lalu</div></div>
+                             </div>
+                             <div class="post-content"><h4>Tips berhenti merokok yang paling efektif?</h4><p>Saya sudah mencoba berhenti merokok berkali-kali tapi selalu gagal. Adakah yang punya pengalaman dan tips jitu? Terima kasih.</p></div>
+                             <div class="post-actions"><button class="post-action">👍 28 Suka</button><button class="post-action">💬 15 Balasan</button></div>
+                         </div>
+                         <div class="text-center" style="margin-top: 2rem;"><a href="#" class="cta-button primary">Lihat Semua Diskusi</a></div>
+                     </div>
+                </div>
+            </section>
+
+            <!-- Kids Zone Section -->
+            <section class="section" id="kids">
+                <h2 class="section-title">🧒 Zona Anak "Petualang Sehat"</h2>
+                <p class="section-subtitle">Ajak si kecil belajar tentang kesehatan dengan cara yang seru dan menyenangkan melalui permainan dan cerita interaktif.</p>
+                <div class="kids-zone">
+                    <div class="kids-mascot">🧑‍⚕️</div>
+                    <div class="cards-grid">
+                        <div class="kids-game"><div class="game-title">🎮 Lawan Kuman</div><p class="text-center">Bantu Dido mengalahkan kuman dengan mencuci tangan yang benar!</p></div>
+                        <div class="kids-game"><div class="game-title">🎨 Warnai Makanan Sehat</div><p class="text-center">Warnai buah dan sayuran favoritmu menjadi seindah mungkin!</p></div>
+                        <div class="kids-game"><div class="game-title">📚 Komik Petualangan</div><p class="text-center">Ikuti petualangan seru Dido dan Ani belajar tentang kebersihan lingkungan.</p></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+    
+    <!-- Knowledge Detail Modal -->
+    <div class="knowledge-modal" id="knowledgeModal">
+        <div class="modal-content" id="modalContent">
+            <!-- Content will be injected by JavaScript -->
+        </div>
+        <button class="modal-close" id="modalClose">×</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tentang PHBS Kita</h3>
+                    <p>PHBS Kita adalah portal informasi dan komunitas online yang didedikasikan untuk mempromosikan Perilaku Hidup Bersih dan Sehat bagi seluruh masyarakat Indonesia.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tautan Cepat</h3>
+                    <ul>
+                        <li><a href="#home" onclick="scrollToSection('home', event)">Beranda</a></li>
+                        <li><a href="#knowledge" onclick="scrollToSection('knowledge', event)">Pengetahuan</a></li>
+                        <li><a href="#tools" onclick="scrollToSection('tools', event)">Alat Interaktif</a></li>
+                        <li><a href="#community" onclick="scrollToSection('community', event)">Komunitas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Hubungi Kami</h3>
+                    <ul>
+                        <li>Email: info@phbskita.id</li>
+                        <li>Telepon: (021) 123-4567</li>
+                        <li>Alamat: Jl. Sehat Selalu No. 1, Jakarta</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Ikuti Kami</h3>
+                    <p>Dapatkan update terbaru melalui sosial media kami.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">F</a>
+                        <a href="#" class="social-link" aria-label="Twitter">T</a>
+                        <a href="#" class="social-link" aria-label="Instagram">I</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 PHBS Kita. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Basic UI Interactivity ---
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const notification = document.getElementById('notification');
+    const notificationClose = document.getElementById('notificationClose');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+
+    notificationClose.addEventListener('click', () => {
+        notification.classList.remove('show');
+    });
+
+    // --- Show/Hide Loading Overlay ---
+    const showLoading = (show) => {
+        if (show) {
+            loadingOverlay.classList.add('active');
+        } else {
+            loadingOverlay.classList.remove('active');
+        }
+    };
+    
+    // --- Notification System ---
+    let notificationTimeout;
+    const showNotification = (message, type = 'success') => {
+        clearTimeout(notificationTimeout);
+        const icon = document.getElementById('notificationIcon');
+        const text = document.getElementById('notificationText');
+        
+        notification.className = 'notification'; // Reset classes
+        notification.classList.add(type);
+        icon.textContent = type === 'success' ? '✅' : '❌';
+        text.textContent = message;
+        
+        notification.classList.add('show');
+        notificationTimeout = setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    };
+
+    // --- Smooth Scrolling & Active Nav Link ---
+    window.scrollToSection = (sectionId, event) => {
+        if (event) event.preventDefault();
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+            if (navMenu.classList.contains('active')) {
+                 hamburger.classList.remove('active');
+                 navMenu.classList.remove('active');
+            }
+        }
+    };
+    
+    // --- Intersection Observer for animations ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                if (entry.target.classList.contains('stat-item')) {
+                    const numberEl = entry.target.querySelector('.stat-number');
+                    animateCountUp(numberEl);
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card, .stat-item').forEach(el => observer.observe(el));
+    
+    // --- Stats Counter Animation ---
+    const animateCountUp = (el) => {
+        const target = +el.getAttribute('data-count');
+        let count = 0;
+        const duration = 2000;
+        const stepTime = Math.abs(Math.floor(duration / target));
+
+        const timer = setInterval(() => {
+            count += Math.ceil(target / (duration / stepTime));
+            if (count >= target) {
+                count = target;
+                clearInterval(timer);
+            }
+            el.textContent = count.toLocaleString('id-ID');
+        }, stepTime);
+    };
+
+    // --- Interactive Tools Tabs ---
+    const toolTabs = document.querySelectorAll('.tool-tab');
+    const toolContainers = document.querySelectorAll('.tool-container');
+
+    toolTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const toolId = tab.dataset.tool;
+            toolTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            toolContainers.forEach(container => {
+                if (container.id === toolId) {
+                    container.classList.add('active');
+                } else {
+                    container.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    // --- Ceklis Rumah Sehat Logic ---
+    const checkboxItems = document.querySelectorAll('.checkbox-item');
+    checkboxItems.forEach(item => {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        item.addEventListener('click', (e) => {
+            if(e.target.type !== 'checkbox') {
+                checkbox.checked = !checkbox.checked;
+            }
+            item.classList.toggle('checked', checkbox.checked);
+        });
+    });
+
+    window.evaluateHome = () => {
+        const form = document.getElementById('homeCheckForm');
+        const checkboxes = form.querySelectorAll('input[name="criteria"]:checked');
+        let score = 0;
+        const recommendations = {
+            water: "Pastikan sumber air bersih terlindungi dan tidak tercemar.",
+            toilet: "Gunakan jamban dengan septic tank yang standar.",
+            garbage: "Pisahkan sampah organik dan anorganik, dan buang pada tempatnya.",
+            ventilation: "Buka jendela setiap pagi agar sirkulasi udara lancar.",
+            mosquitoCheck: "Rutin lakukan 3M Plus (Menguras, Menutup, Mendaur ulang).",
+            smokingCheck: "Buat aturan dilarang merokok di dalam rumah.",
+            handwashCheck: "Sediakan sabun dan air mengalir di dekat wastafel atau toilet.",
+            food: "Perbanyak konsumsi buah dan sayur setiap hari."
+        };
+        const missedCriteria = [];
+
+        checkboxes.forEach(cb => {
+            score += parseInt(cb.value);
+        });
+        
+        // Find unchecked criteria
+        form.querySelectorAll('input[name="criteria"]').forEach(cb => {
+            if (!cb.checked) {
+                missedCriteria.push(recommendations[cb.id]);
+            }
+        });
+
+        const resultDiv = document.getElementById('homeResult');
+        let description = '';
+        if (score >= 80) {
+            description = 'Luar Biasa! Rumah Anda sudah sangat sehat. Pertahankan kebiasaan baik ini!';
+        } else if (score >= 50) {
+            description = 'Cukup Baik! Ada beberapa hal yang bisa ditingkatkan agar rumah lebih sehat.';
+        } else {
+            description = 'Perlu Perhatian! Mari tingkatkan beberapa aspek kebersihan dan kesehatan di rumah Anda.';
+        }
+        
+        let recommendationHTML = '';
+        if(missedCriteria.length > 0) {
+            recommendationHTML = `
+                <div class="result-recommendations">
+                    <h4>Rekomendasi Perbaikan:</h4>
+                    <ul class="recommendation-list">
+                        ${missedCriteria.map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        resultDiv.innerHTML = `
+            <div class="result-card">
+                <div class="result-score">${score}/100</div>
+                <div class="result-description">${description}</div>
+                ${recommendationHTML}
+            </div>
+        `;
+        resultDiv.classList.remove('hidden');
+        showNotification('Evaluasi rumah sehat berhasil!', 'success');
+    };
+
+    // --- 21 Days Challenge Logic ---
+    let currentChallenge = null;
+    let challengeData = {};
+    const challengeDetails = {
+        water: { title: "Air Putih 8 Gelas", desc: "Minum minimal 8 gelas air putih setiap hari" },
+        fruit: { title: "Buah & Sayur", desc: "Konsumsi buah dan sayur setiap hari" },
+        exercise: { title: "Olahraga 30 Menit", desc: "Berolahraga minimal 30 menit setiap hari" },
+        handwashChallenge: { title: "Cuci Tangan Rutin", desc: "Cuci tangan sebelum makan & sesudah dari toilet" },
+        sleep: { title: "Tidur 8 Jam", desc: "Tidur cukup 7-8 jam setiap malam" },
+        meditation: { title: "Meditasi", desc: "Relaksasi 10 menit setiap hari" }
+    };
+    
+    const challengeOptions = document.querySelectorAll('.challenge-option');
+    challengeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            currentChallenge = option.dataset.challenge;
+            challengeOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            startChallenge();
+        });
+    });
+
+    const startChallenge = () => {
+        challengeData = {
+            days: Array(21).fill(false),
+            currentDay: 0,
+            startDate: new Date().toISOString()
+        };
+        updateChallengeUI();
+        document.getElementById('challengeSelector').classList.add('hidden');
+        document.getElementById('challengeTracker').classList.remove('hidden');
+        document.getElementById('challengeSuccess').classList.add('hidden');
+    };
+
+    window.resetChallenge = () => {
+        currentChallenge = null;
+        document.getElementById('challengeSelector').classList.remove('hidden');
+        document.getElementById('challengeTracker').classList.add('hidden');
+        challengeOptions.forEach(opt => opt.classList.remove('selected'));
+    };
+    
+    const updateChallengeUI = () => {
+        if (!currentChallenge) return;
+        
+        const { title, desc } = challengeDetails[currentChallenge];
+        document.getElementById('challengeTitle').textContent = title;
+        document.getElementById('challengeDesc').textContent = desc;
+
+        const completedDays = challengeData.days.filter(Boolean).length;
+        const progress = Math.round((completedDays / 21) * 100);
+        
+        document.getElementById('challengeProgress').style.width = `${progress}%`;
+        document.getElementById('currentDay').textContent = completedDays + 1 > 21 ? 21 : completedDays + 1;
+        document.getElementById('progressPercentage').textContent = progress;
+        
+        const grid = document.getElementById('challengeGrid');
+        grid.innerHTML = '';
+        challengeData.days.forEach((completed, i) => {
+            const dayEl = document.createElement('div');
+            dayEl.classList.add('challenge-day');
+            dayEl.textContent = i + 1;
+            if (completed) dayEl.classList.add('completed');
+            if (i === completedDays && completedDays < 21) {
+                dayEl.classList.add('current');
+            }
+            grid.appendChild(dayEl);
+        });
+        
+        document.getElementById('markCompleteBtn').disabled = challengeData.days[completedDays];
+        
+        if(completedDays === 21){
+             document.getElementById('challengeSuccess').classList.remove('hidden');
+             document.getElementById('markCompleteBtn').disabled = true;
+        }
+    };
+    
+    document.getElementById('markCompleteBtn').addEventListener('click', () => {
+        const completedDays = challengeData.days.filter(Boolean).length;
+        if (completedDays < 21) {
+            challengeData.days[completedDays] = true;
+            updateChallengeUI();
+            showNotification(`Hari ke-${completedDays + 1} selesai! Hebat!`, 'success');
+        }
+    });
+
+    window.downloadCertificate = () => {
+        showNotification("Sertifikat sedang disiapkan!", "success");
+        // In a real app, this would trigger a PDF generation.
+    };
+
+    // --- Nutrition Calculator Logic ---
+    window.calculateNutrition = () => {
+        const name = document.getElementById('childName').value;
+        const age = parseInt(document.getElementById('childAge').value);
+        const weight = parseFloat(document.getElementById('childWeight').value);
+        const height = parseFloat(document.getElementById('childHeight').value);
+        const gender = document.getElementById('childGender').value;
+        const activity = document.getElementById('activityLevel').value;
+
+        if (!name || !age || !weight || !height || !gender || !activity) {
+            showNotification('Mohon lengkapi semua data anak.', 'error');
+            return;
+        }
+
+        // Simplified Harris-Benedict Equation for children (estimation)
+        let bmr;
+        if (gender === 'male') {
+            bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        } else {
+            bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+        }
+        
+        // Adjust for age group (Kemenkes approximation)
+        if(age >= 1 && age <= 3) bmr = 1000;
+        if(age >= 4 && age <= 6) bmr = 1400;
+        if(age >= 7 && age <= 9) bmr = 1650;
+        if(age >= 10 && age <= 12) bmr = (gender === 'male' ? 2000 : 1900);
+
+
+        let activityFactor = 1.2;
+        if (activity === 'moderate') activityFactor = 1.5;
+        if (activity === 'high') activityFactor = 1.8;
+
+        const totalCalories = Math.round(bmr * activityFactor);
+        const protein = Math.round(totalCalories * 0.15 / 4); // 15% from protein
+        const carbs = Math.round(totalCalories * 0.55 / 4);   // 55% from carbs
+        const fat = Math.round(totalCalories * 0.30 / 9);     // 30% from fat
+
+        const resultDiv = document.getElementById('nutritionResult');
+        resultDiv.innerHTML = `
+            <div class="result-card">
+                <div class="result-description">Kebutuhan Gizi Harian untuk <strong>${name}</strong>:</div>
+                <div class="result-score">${totalCalories} kkal</div>
+                <div class="result-recommendations">
+                    <h4>Estimasi Makronutrien:</h4>
+                    <ul class="recommendation-list">
+                        <li><strong>Protein:</strong> ${protein} gram</li>
+                        <li><strong>Karbohidrat:</strong> ${carbs} gram</li>
+                        <li><strong>Lemak:</strong> ${fat} gram</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+        resultDiv.classList.remove('hidden');
+        showNotification('Perhitungan gizi berhasil!', 'success');
+    };
+    
+    // --- Immunization Schedule Logic ---
+    window.generateImmunizationSchedule = () => {
+        const name = document.getElementById('babyName').value;
+        const birthDateStr = document.getElementById('birthDate').value;
+        if (!name || !birthDateStr) {
+            showNotification('Mohon lengkapi nama dan tanggal lahir anak.', 'error');
+            return;
+        }
+
+        const birthDate = new Date(birthDateStr);
+        const schedule = [
+            { vaccine: "Hepatitis B (HB-0)", age: 0, unit: "day", desc: "Segera setelah lahir (<24 jam)" },
+            { vaccine: "Polio 0", age: 0, unit: "day", desc: "Saat lahir" },
+            { vaccine: "BCG", age: 1, unit: "month", desc: "Usia 1 bulan" },
+            { vaccine: "DPT-HB-Hib 1", age: 2, unit: "month", desc: "Usia 2 bulan" },
+            { vaccine: "Polio 1", age: 2, unit: "month", desc: "Usia 2 bulan" },
+            { vaccine: "DPT-HB-Hib 2", age: 3, unit: "month", desc: "Usia 3 bulan" },
+            { vaccine: "Polio 2", age: 3, unit: "month", desc: "Usia 3 bulan" },
+            { vaccine: "DPT-HB-Hib 3", age: 4, unit: "month", desc: "Usia 4 bulan" },
+            { vaccine: "Polio 3", age: 4, unit: "month", desc: "Usia 4 bulan" },
+            { vaccine: "Campak", age: 9, unit: "month", desc: "Usia 9 bulan" },
+            { vaccine: "DPT-HB-Hib Lanjutan", age: 18, unit: "month", desc: "Usia 18 bulan" },
+            { vaccine: "Campak Lanjutan", age: 24, unit: "month", desc: "Usia 2 tahun" }
+        ];
+
+        const resultDiv = document.getElementById('immunizationResult');
+        let tableHTML = `
+            <div class="progress-container" style="margin-top: 2rem;">
+                <h3 class="text-center">Jadwal Imunisasi untuk ${name}</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 1.5rem;">
+                    <thead style="background: #f0f0f0;">
+                        <tr>
+                            <th style="padding: 1rem; text-align: left;">Vaksin</th>
+                            <th style="padding: 1rem; text-align: left;">Jadwal (Tanggal)</th>
+                            <th style="padding: 1rem; text-align: left;">Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        const today = new Date();
+        today.setHours(0,0,0,0);
+
+        schedule.forEach(item => {
+            const dueDate = new Date(birthDate);
+            if(item.unit === 'day') dueDate.setDate(dueDate.getDate() + item.age);
+            if(item.unit === 'month') dueDate.setMonth(dueDate.getMonth() + item.age);
+            
+            const formattedDate = dueDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const isDue = dueDate <= today;
+            
+            tableHTML += `
+                <tr style="${isDue ? 'color: #999;' : 'font-weight: bold;'}">
+                    <td style="padding: 1rem; border-bottom: 1px solid #eee;">${item.vaccine}</td>
+                    <td style="padding: 1rem; border-bottom: 1px solid #eee;">${formattedDate}</td>
+                    <td style="padding: 1rem; border-bottom: 1px solid #eee;">${item.desc} ${isDue ? '(Sudah Lewat)' : ''}</td>
+                </tr>
+            `;
+        });
+        
+        tableHTML += `</tbody></table></div>`;
+        resultDiv.innerHTML = tableHTML;
+        resultDiv.classList.remove('hidden');
+        showNotification('Jadwal imunisasi berhasil dibuat!', 'success');
+    };
+
+    // --- BMI Calculator Logic ---
+    window.calculateBMI = () => {
+        const weight = parseFloat(document.getElementById('bmiWeight').value);
+        const height = parseFloat(document.getElementById('bmiHeight').value);
+
+        if (!weight || !height || height <= 0) {
+            showNotification('Mohon masukkan berat dan tinggi badan yang valid.', 'error');
+            return;
+        }
+
+        const heightInMeters = height / 100;
+        const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+        
+        let category = '';
+        let color = '';
+        if (bmi < 18.5) {
+            category = 'Berat Badan Kurang';
+            color = '#3498db';
+        } else if (bmi >= 18.5 && bmi <= 24.9) {
+            category = 'Berat Badan Ideal';
+            color = '#2ecc71';
+        } else if (bmi >= 25 && bmi <= 29.9) {
+            category = 'Berat Badan Berlebih';
+            color = '#f1c40f';
+        } else {
+            category = 'Obesitas';
+            color = '#e74c3c';
+        }
+        
+        const resultDiv = document.getElementById('bmiResult');
+        resultDiv.innerHTML = `
+            <div class="result-card" style="background: linear-gradient(135deg, ${color}, ${color}dd);">
+                <div class="result-description">Indeks Massa Tubuh Anda:</div>
+                <div class="result-score">${bmi}</div>
+                <div class="result-description" style="font-weight: bold; font-size: 1.5rem;">Kategori: ${category}</div>
+            </div>
+        `;
+        resultDiv.classList.remove('hidden');
+        showNotification('Perhitungan BMI berhasil!', 'success');
+    };
+
+    // --- Knowledge Modal Logic ---
+    const knowledgeModal = document.getElementById('knowledgeModal');
+    const modalContent = document.getElementById('modalContent');
+    const modalClose = document.getElementById('modalClose');
+
+    const knowledgeData = {
+        phbs10: {
+            title: "10 Indikator PHBS Rumah Tangga",
+            content: `
+                <p>PHBS di Rumah Tangga adalah upaya untuk memberdayakan anggota rumah tangga agar tahu, mau dan mampu mempraktikkan perilaku hidup bersih dan sehat serta berperan aktif dalam gerakan kesehatan di masyarakat.</p>
+                <h3>10 Indikator Utama:</h3>
+                <ol>
+                    <li><strong>Persalinan ditolong oleh tenaga kesehatan:</strong> Memastikan keselamatan ibu dan bayi.</li>
+                    <li><strong>Memberi ASI eksklusif:</strong> Bayi diberi ASI saja sejak lahir sampai usia 6 bulan.</li>
+                    <li><strong>Menimbang balita setiap bulan:</strong> Memantau pertumbuhan balita secara rutin.</li>
+                    <li><strong>Menggunakan air bersih:</strong> Kebutuhan dasar untuk minum, masak, mandi, dan cuci.</li>
+                    <li><strong>Mencuci tangan dengan air bersih dan sabun:</strong> Mencegah penularan penyakit.</li>
+                    <li><strong>Menggunakan jamban sehat:</strong> Mencegah penyebaran penyakit berbasis lingkungan.</li>
+                    <li><strong>Memberantas jentik di rumah sekali seminggu:</strong> Mencegah demam berdarah.</li>
+                    <li><strong>Makan buah dan sayur setiap hari:</strong> Memenuhi kebutuhan vitamin dan serat.</li>
+                    <li><strong>Melakukan aktivitas fisik setiap hari:</strong> Menjaga kebugaran dan kesehatan tubuh.</li>
+                    <li><strong>Tidak merokok di dalam rumah:</strong> Melindungi anggota keluarga dari bahaya asap rokok.</li>
+                </ol>
+            `
+        },
+        nutrition: {
+            title: "Panduan Gizi Seimbang",
+            content: `
+                <p>Gizi seimbang adalah susunan pangan sehari-hari yang mengandung zat gizi dalam jenis dan jumlah yang sesuai dengan kebutuhan tubuh, dengan memerhatikan prinsip keanekaragaman pangan, aktivitas fisik, perilaku hidup bersih, dan memantau berat badan secara teratur.</p>
+                <h3>Isi Piringku:</h3>
+                <p>Panduan praktis dari Kemenkes untuk konsumsi sekali makan:</p>
+                <ul>
+                    <li><strong>1/3 Piring:</strong> Makanan Pokok (Nasi, jagung, kentang).</li>
+                    <li><strong>1/3 Piring:</strong> Sayuran.</li>
+                    <li><strong>1/6 Piring:</strong> Lauk Pauk (Protein hewani & nabati).</li>
+                    <li><strong>1/6 Piring:</strong> Buah-buahan.</li>
+                </ul>
+                <p>Lengkapi dengan minum air putih yang cukup dan batasi konsumsi gula, garam, dan lemak.</p>
+            `
+        },
+        handwash: {
+            title: "7 Langkah Cuci Tangan Pakai Sabun",
+            content: `
+                <p>Mencuci tangan adalah cara sederhana namun efektif untuk mencegah penyebaran kuman. Lakukan selama 40-60 detik dengan air mengalir dan sabun.</p>
+                <h3>Langkah-langkahnya:</h3>
+                <ol>
+                    <li>Basahi tangan dan tuangkan sabun secukupnya.</li>
+                    <li>Gosok kedua telapak tangan.</li>
+                    <li>Gosok punggung dan sela-sela jari tangan kiri dengan tangan kanan dan sebaliknya.</li>
+                    <li>Gosok kedua telapak tangan dan sela-sela jari.</li>
+                    <li>Jari-jari sisi dalam dari kedua tangan saling mengunci.</li>
+                    <li>Gosok ibu jari kiri berputar dalam genggaman tangan kanan dan lakukan sebaliknya.</li>
+                    <li>Gosokkan dengan memutar ujung jari-jari tangan kanan di telapak tangan kiri dan sebaliknya.</li>
+                </ol>
+                <p>Bilas dengan air bersih dan keringkan dengan handuk bersih atau tisu.</p>
+            `
+        },
+        smoking: {
+            title: "Bahaya Merokok",
+            content: `
+                <p>Merokok sangat berbahaya bagi kesehatan, baik bagi perokok aktif maupun pasif. Asap rokok mengandung lebih dari 7.000 bahan kimia, di mana ratusan di antaranya beracun dan sekitar 70 dapat menyebabkan kanker.</p>
+                <h3>Dampak Utama Merokok:</h3>
+                <ul>
+                    <li><strong>Penyakit Jantung dan Stroke:</strong> Merusak pembuluh darah dan meningkatkan risiko penggumpalan darah.</li>
+                    <li><strong>Kanker:</strong> Terutama kanker paru-paru, mulut, tenggorokan, dan pankreas.</li>
+                    <li><strong>Penyakit Pernapasan Kronis:</strong> Seperti bronkitis kronis dan emfisema.</li>
+                    <li><strong>Gangguan Kehamilan:</strong> Meningkatkan risiko keguguran, kelahiran prematur, dan berat badan lahir rendah.</li>
+                    <li><strong>Penuaan Dini:</strong> Menyebabkan keriput pada kulit dan kerusakan gigi.</li>
+                </ul>
+                <p>Berhenti merokok adalah keputusan terbaik untuk kesehatan Anda dan orang-orang di sekitar Anda.</p>
+            `
+        },
+        mosquito: {
+            title: "Pemberantasan Sarang Nyamuk (PSN) dengan 3M Plus",
+            content: `
+                <p>PSN adalah kegiatan memberantas telur, jentik, dan kepompong nyamuk Aedes aegypti di tempat-tempat perkembangbiakannya. Cara paling efektif adalah dengan 3M Plus.</p>
+                <h3>3M:</h3>
+                <ol>
+                    <li><strong>Menguras:</strong> Menguras tempat penampungan air seperti bak mandi, kendi, toren air, drum, dan tempat penampungan air lainnya.</li>
+                    <li><strong>Menutup:</strong> Menutup rapat tempat-tempat penampungan air.</li>
+                    <li><strong>Mendaur ulang:</strong> Mendaur ulang atau memanfaatkan kembali barang bekas yang berpotensi jadi tempat perkembangbiakan nyamuk.</li>
+                </ol>
+                <h3>Plus:</h3>
+                <p>Kegiatan pencegahan tambahan seperti:</p>
+                <ul>
+                    <li>Memelihara ikan pemakan jentik nyamuk.</li>
+                    <li>Menggunakan kelambu saat tidur.</li>
+                    <li>Menanam tanaman pengusir nyamuk.</li>
+                    <li>Menghindari kebiasaan menggantung pakaian di dalam rumah.</li>
+                    <li>Menggunakan lotion anti nyamuk.</li>
+                </ul>
+            `
+        },
+        immunization: {
+            title: "Pentingnya Imunisasi Lengkap",
+            content: `
+                <p>Imunisasi adalah proses untuk membuat seseorang imun atau kebal terhadap suatu penyakit. Proses ini dilakukan dengan pemberian vaksin yang merangsang sistem kekebalan tubuh untuk memproduksi antibodi.</p>
+                <h3>Mengapa Imunisasi Penting?</h3>
+                <ul>
+                    <li><strong>Melindungi Anak:</strong> Mencegah anak dari berbagai Penyakit yang Dapat Dicegah Dengan Imunisasi (PD3I) yang berbahaya seperti campak, polio, tetanus, dan TBC.</li>
+                    <li><strong>Melindungi Masyarakat (Herd Immunity):</strong> Ketika sebagian besar anak di suatu wilayah diimunisasi, penyebaran penyakit akan terhambat, sehingga melindungi anak-anak lain yang belum bisa diimunisasi karena alasan medis.</li>
+                    <li><strong>Menghemat Biaya:</strong> Biaya vaksinasi jauh lebih murah dibandingkan biaya pengobatan jika anak jatuh sakit.</li>
+                </ul>
+                <p>Pastikan anak Anda mendapatkan imunisasi dasar lengkap sesuai jadwal yang direkomendasikan oleh pemerintah untuk perlindungan optimal.</p>
+            `
+        }
+    };
+
+    window.showKnowledgeDetail = (topic) => {
+        const data = knowledgeData[topic];
+        if (data) {
+            modalContent.innerHTML = `<h2>${data.title}</h2>${data.content}`;
+            knowledgeModal.classList.add('active');
+        }
+    };
+
+    modalClose.addEventListener('click', () => {
+        knowledgeModal.classList.remove('active');
+    });
+    
+    knowledgeModal.addEventListener('click', (e) => {
+        if(e.target === knowledgeModal){
+            knowledgeModal.classList.remove('active');
+        }
+    });
+
+});
+</script>
+</body>
+</html>
